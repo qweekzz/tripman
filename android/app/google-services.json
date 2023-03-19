@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "99397106135",
+    "project_id": "tripman-413f6",
+    "storage_bucket": "tripman-413f6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:99397106135:android:cc75e4eb6d42af3f2c7392",
+        "android_client_info": {
+          "package_name": "com.example.tripman"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "99397106135-m988oi7v5e7cvl99aatrng1c8il1gl3p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARpvYO9IZsVccftZo2hvMQyxD8rgPemao"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "99397106135-m988oi7v5e7cvl99aatrng1c8il1gl3p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

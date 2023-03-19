@@ -1,0 +1,15 @@
+part of 'test_bloc.dart';
+
+abstract class TestEvent extends Equatable {
+  const TestEvent();
+
+  @override
+  List<Object> get props => [];
+}
+
+class LoginButtonTappedEvent extends TestEvent {
+  final String date;
+  const LoginButtonTappedEvent(this.date);
+}
+
+class ShowSnackBarButtonTappedEvent extends TestEvent {}
