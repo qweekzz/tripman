@@ -34,8 +34,6 @@ class CreatePricePage extends StatelessWidget {
 
     return BlocListener<DateBaseBloc, DateBaseState>(
       listenWhen: (previous, current) {
-        print('current $current');
-        print('previous $previous');
         return current is DateBaseAdminSaveState ? true : false;
       },
       listener: (context, state) {
@@ -84,7 +82,7 @@ class CreatePricePage extends StatelessWidget {
                             backgroundColor: Colors.black,
                           ),
                           onPressed: () {
-                            context.read<DateBaseBloc>().add(DateGet());
+                            context.read<DateBaseBloc>().add(const DateGet());
                             AutoRouter.of(context).pushNamed('/home');
                           },
                           child: const Text('Отлично'),
@@ -97,7 +95,7 @@ class CreatePricePage extends StatelessWidget {
             );
           },
         );
-        context.read<DateBaseBloc>().add(DateGet());
+        context.read<DateBaseBloc>().add(const DateGet());
       },
       child: Scaffold(
         appBar: AppBar(
@@ -212,9 +210,9 @@ class CreatePricePage extends StatelessWidget {
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
+                        children: const [
                           SizedBox(),
-                          const Text('Добавить объект'),
+                          Text('Добавить объект'),
                           Icon(Icons.arrow_forward)
                         ],
                       ),
@@ -242,9 +240,6 @@ class _phoneInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      onChanged: (value) {
-        print(controllerAdminPhone);
-      },
       inputFormatters: [maskFormatter],
       controller: controllerAdminPhone,
       key: const Key('phoneForm_phoneInput_textField'),

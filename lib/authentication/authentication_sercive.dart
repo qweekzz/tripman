@@ -45,24 +45,16 @@ class AuthService {
       //попробывать разделить част этой штуки
       // до зватра )
       verificationCompleted: (PhoneAuthCredential credential) async {
-        print('verificationCompleted');
         await auth.signInWithCredential(credential);
       },
       verificationFailed: (FirebaseAuthException e) {
-        print('verificationFailed');
-        if (e.code == 'invalid-phone-number') {
-          print('verificationFailed сработал!.');
-        }
+        if (e.code == 'invalid-phone-number') {}
       },
       codeSent: (String verificationId, int? resendToken) async {
         // String smsCode = 'xxxx';
-        print('codeSentTest ${verificationId}');
         _verificationId = verificationId;
         PhoneAuthCredential credential = PhoneAuthProvider.credential(
             verificationId: verificationId, smsCode: user.smsCode ?? '0');
-
-        print('codeSent ${credential.smsCode}');
-        print('codeSent1 ${_verificationId}');
       },
       codeAutoRetrievalTimeout: (String verificationId) {},
     );
@@ -71,9 +63,6 @@ class AuthService {
 
   Future<UserCredential?> verifyPhoneNumber2(Users user, String test) async {
     try {
-      print('!!!!!!!!! ${test}');
-      print('!! $_verificationId');
-
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithCredential(PhoneAuthProvider.credential(
               verificationId: _verificationId, smsCode: test));

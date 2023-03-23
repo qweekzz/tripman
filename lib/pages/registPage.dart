@@ -1,9 +1,10 @@
+// ignore_for_file: avoid_print
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tripman/authentication/bloc/authentication_bloc.dart';
 import 'package:tripman/forms/bloc/forms_bloc.dart';
-import 'package:tripman/pages/homePage.dart';
 
 class RegistrPage extends StatelessWidget {
   const RegistrPage({Key? key}) : super(key: key);
@@ -138,7 +139,7 @@ class _SubmitButton extends StatelessWidget {
                   .read<FormsBloc>()
                   .add(const FormSubmitted(value: Status.signUp));
             },
-            child: Text('зарегигистрироваться'),
+            child: const Text('зарегигистрироваться'),
           ),
         );
       },

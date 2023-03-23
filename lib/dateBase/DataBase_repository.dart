@@ -5,14 +5,10 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
   DataBaseServices service = DataBaseServices();
 
   @override
-  Future addCampData(
-    String clientId,
-    String AdminId,
-    String userPhone,
-    String comment,
-    String status,
-  ) {
-    return service.addCampData(clientId, AdminId, userPhone, comment, status);
+  Future addCampData(String clientId, String AdminId, String userPhone,
+      String comment, String status, Camps camp) {
+    return service.addCampData(
+        clientId, AdminId, userPhone, comment, status, camp);
   }
 
   @override
@@ -45,6 +41,7 @@ abstract class DatabaseRepository {
     String userPhone,
     String comment,
     String status,
+    Camps camp,
   );
 
   Future<List<Camps>> getCampData();

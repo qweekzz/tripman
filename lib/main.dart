@@ -8,11 +8,9 @@ import 'package:tripman/date/bloc/date_bloc.dart';
 import 'package:tripman/dateBase/DataBase_repository.dart';
 import 'package:tripman/dateBase/bloc/date_base_bloc.dart';
 import 'package:tripman/forms/bloc/forms_bloc.dart';
-import 'package:tripman/pages/BlocNavigate.dart';
-import 'package:tripman/pages/homePage.dart';
-import 'package:tripman/pages/loginPage.dart';
 import 'package:tripman/routers/router.gr.dart';
 import 'package:tripman/test/bloc/test_bloc.dart';
+import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 import 'firebase_options.dart';
 
@@ -32,6 +30,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AndroidYandexMap.useAndroidViewSurface = false;
     return MultiBlocProvider(
       providers: [
         BlocProvider<AuthenticationBloc>(

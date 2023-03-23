@@ -10,8 +10,9 @@ class DataBaseServices {
     String userPhone,
     String comment,
     String status,
+    Camps camp,
   ) async {
-    await _db.collection("camps").doc(AdminId).update({
+    await _db.collection("camps").doc(camp.uId).update({
       "order.$clientId": {
         'userPhone': userPhone,
         'comment': comment,
@@ -23,7 +24,6 @@ class DataBaseServices {
   Future<List<Camps>> getCampData() async {
     QuerySnapshot<Map<String, dynamic>> snapshot =
         await _db.collection("camps").get();
-    // print(snapshot.docs);
     return snapshot.docs
         .map((docSnapshot) => Camps.fromDocumentSnapshot(docSnapshot))
         .toList();
@@ -54,18 +54,14 @@ class DataBaseServices {
       'price': price,
     });
   }
-}
 
-
-
-
-  // addCampData(Camps campData, doc, id) async {
+  // addCampData2(Camps campData, doc, id) async {
   //   await _db.collection("camps").doc(doc).update({
-    //   "order.$id": {
-    //     'userPhone': campData.userPhone,
-    //     'OpenDate': campData.OpenDate,
-    //     'comment': campData.comment,
-    //     'status': 'Ожидание',
-    //   }
-    // });
+  //     "order.$id": {
+  //       'userPhone': campData.userPhone,
+  //       'comment': campData.comment,
+  //       'status': 'Ожидание',
+  //     }
+  //   });
   // }
+}

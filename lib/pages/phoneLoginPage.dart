@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable, avoid_print
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +8,6 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:tripman/authentication/bloc/authentication_bloc.dart';
 import 'package:tripman/forms/bloc/forms_bloc.dart';
 import 'package:tripman/models/user_model.dart';
-import 'package:tripman/pages/otpPage.dart';
 import 'package:tripman/routers/router.gr.dart';
 
 class PhoneLoginPage extends StatelessWidget {
@@ -49,12 +50,10 @@ class PhoneLoginPage extends StatelessWidget {
               onPressed: () {
                 AutoRouter.of(context).navigateBack();
               },
-              icon: Container(
-                child: const Icon(
-                  Icons.arrow_back,
-                  size: 24,
-                  color: Colors.black,
-                ),
+              icon: const Icon(
+                Icons.arrow_back,
+                size: 24,
+                color: Colors.black,
               )),
         ),
         body: Padding(
@@ -70,7 +69,7 @@ class PhoneLoginPage extends StatelessWidget {
                     style: TextStyle(color: Colors.black),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: 30),
+                    padding: const EdgeInsets.only(top: 30),
                     child: _phoneInput(
                       controllerNumb: controllerNumb,
                     ),
@@ -80,7 +79,7 @@ class PhoneLoginPage extends StatelessWidget {
               Column(
                 children: [
                   _SubmitButton(controllerNumb: controllerNumb),
-                  RichTextLicense(),
+                  const RichTextLicense(),
                 ],
               ),
             ],

@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:tripman/authentication/authentication_repository.dart';
 import 'package:tripman/models/user_model.dart';
 
@@ -17,11 +18,9 @@ class AuthenticationBloc
         Users user = await _authenticationRepository.getCurrentUser().first;
         if (user.uid != '') {
           String? id = '${user.uid}';
-          print("user ID ${user.uid}");
+          debugPrint("user ID ${user.uid}");
           emit(AuthenticationSuccess(id: id));
         } else {
-          print("user ID2 ${user.uid}");
-
           emit(AuthenticationFail());
         }
       } else if (event is AuthenticationSignedOut) {

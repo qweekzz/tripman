@@ -1,18 +1,32 @@
+// ignore_for_file: avoid_print
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pinput/pinput.dart';
 import 'package:tripman/authentication/bloc/authentication_bloc.dart';
 import 'package:tripman/forms/bloc/forms_bloc.dart';
-import 'package:tripman/models/user_model.dart';
 
 class optPage extends StatelessWidget {
+  final pinController = TextEditingController();
+  final focusNode = FocusNode();
+  final formKey = GlobalKey<FormState>();
   final String controllerNumb;
   final TextEditingController smsCode = TextEditingController();
   optPage({super.key, required this.controllerNumb});
 
   @override
   Widget build(BuildContext context) {
+    final defaultPinTheme = PinTheme(
+      width: 56,
+      height: 56,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(19),
+        border: Border.all(color: Colors.black),
+      ),
+    );
+
     Size size = MediaQuery.of(context).size;
     return MultiBlocListener(
       listeners: [
@@ -42,22 +56,26 @@ class optPage extends StatelessWidget {
               onPressed: () {
                 AutoRouter.of(context).navigateBack();
               },
-              icon: Container(
-                child: const Icon(
-                  Icons.arrow_back,
-                  size: 24,
-                  color: Colors.black,
-                ),
+              icon: const Icon(
+                Icons.arrow_back,
+                size: 24,
+                color: Colors.black,
               )),
         ),
         body: Padding(
-          padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
+          padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(
                 children: [
-                  TextField(controller: smsCode),
+                  Pinput(
+                    length: 6,
+                    controller: pinController,
+                    focusNode: focusNode,
+                    defaultPinTheme: defaultPinTheme,
+                    // hapticFeedbackType: HapticFeedbackType.lightImpact,
+                  ),
                 ],
               ),
               Column(
@@ -81,15 +99,14 @@ class optPage extends StatelessWidget {
                                   state.copyWith(
                                       isPhoneValid: true,
                                       isLoading: true,
-                                      smsCode: smsCode.text),
+                                      smsCode: pinController.text),
                                 );
 
                             // Users(smsCode: smsCode.text);
                             // Users().copyWith(smsCode: smsCode.text);
 
-                            context
-                                .read<FormsBloc>()
-                                .add(FormSubmitted(value: Status.phoneIn2));
+                            context.read<FormsBloc>().add(
+                                const FormSubmitted(value: Status.phoneIn2));
                             print('phoneIn work');
                           },
                           child: Text('Подтвердить ${controllerNumb}'),
@@ -97,7 +114,7 @@ class optPage extends StatelessWidget {
                       );
                     },
                   ),
-                  RichTextLicense(),
+                  const RichTextLicense(),
                 ],
               ),
             ],
@@ -113,7 +130,6 @@ class RichTextLicense extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.only(top: 25),
       child: RichText(

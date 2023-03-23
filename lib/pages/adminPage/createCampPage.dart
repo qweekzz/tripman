@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
@@ -7,7 +9,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:multi_image_picker_view/multi_image_picker_view.dart';
 import 'package:tripman/authentication/bloc/authentication_bloc.dart';
 import 'package:tripman/counter/bloc/counter_bloc.dart';
-import 'package:tripman/dateBase/bloc/date_base_bloc.dart';
 import 'package:tripman/routers/router.gr.dart';
 
 enum Type { camp, camp2, camp3, camp4, camp5 }
@@ -43,7 +44,6 @@ class _CreateCampPageState extends State<CreateCampPage> {
   List<DateTime>? arraryDateRange;
 
   selectType() {
-    print(type.elementAt(_character.index));
     return type.elementAt(_character.index);
   }
 
@@ -150,7 +150,7 @@ class _CreateCampPageState extends State<CreateCampPage> {
                 SizedBox(
                   height: 5,
                   child: Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                         border: Border(top: BorderSide(color: Colors.black54))),
                   ),
                 ),
@@ -181,7 +181,7 @@ class _CreateCampPageState extends State<CreateCampPage> {
                 SizedBox(
                   height: 5,
                   child: Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                         border: Border(top: BorderSide(color: Colors.black54))),
                   ),
                 ),
@@ -212,7 +212,7 @@ class _CreateCampPageState extends State<CreateCampPage> {
                 SizedBox(
                   height: 5,
                   child: Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                         border: Border(top: BorderSide(color: Colors.black54))),
                   ),
                 ),
@@ -243,7 +243,7 @@ class _CreateCampPageState extends State<CreateCampPage> {
                 SizedBox(
                   height: 5,
                   child: Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                         border: Border(top: BorderSide(color: Colors.black54))),
                   ),
                 ),
@@ -367,14 +367,14 @@ class _CreateCampPageState extends State<CreateCampPage> {
                                             .read<CounterBloc>()
                                             .add(CounterIncEvent());
                                       },
-                                      icon: Icon(
+                                      icon: const Icon(
                                         Icons.add_circle_outline,
                                         size: 28,
                                       ),
                                     ),
                                     Text(
                                       '$state',
-                                      style: TextStyle(fontSize: 24),
+                                      style: const TextStyle(fontSize: 24),
                                     ),
                                     IconButton(
                                       onPressed: () {
@@ -382,7 +382,7 @@ class _CreateCampPageState extends State<CreateCampPage> {
                                             .read<CounterBloc>()
                                             .add(CounterDecEvent());
                                       },
-                                      icon: Icon(
+                                      icon: const Icon(
                                         Icons.remove_circle_outline,
                                         size: 30,
                                       ),
@@ -396,7 +396,7 @@ class _CreateCampPageState extends State<CreateCampPage> {
                           SizedBox(
                             height: 0,
                             child: Container(
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                   border: Border(
                                       top: BorderSide(color: Colors.black38))),
                             ),
@@ -424,7 +424,7 @@ class _CreateCampPageState extends State<CreateCampPage> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(
+                                    const Text(
                                       'Добавить фото',
                                       style: TextStyle(
                                           fontSize: 15,
@@ -434,7 +434,7 @@ class _CreateCampPageState extends State<CreateCampPage> {
                                       padding: const EdgeInsets.only(right: 15),
                                       child: IconButton(
                                         onPressed: () {},
-                                        icon: Icon(
+                                        icon: const Icon(
                                           Icons.image_outlined,
                                           size: 28,
                                         ),
@@ -452,7 +452,7 @@ class _CreateCampPageState extends State<CreateCampPage> {
                       SizedBox(
                         height: 0,
                         child: Container(
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                               border: Border(
                                   top: BorderSide(color: Colors.black38))),
                         ),
@@ -462,7 +462,7 @@ class _CreateCampPageState extends State<CreateCampPage> {
                 ),
                 //route button
                 Padding(
-                  padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
+                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.fromLTRB(0, 15, 0, 15),
@@ -475,8 +475,21 @@ class _CreateCampPageState extends State<CreateCampPage> {
                     onPressed: () async {
                       final storageRef = FirebaseStorage.instance;
                       //Поправить
-                      await controllerImg.images.map((e) async {
+                      controllerImg.images.map((e) async {
                         var path = File(e.path!);
+                        // var result =
+                        //     await FlutterImageCompress.compressAndGetFile(
+                        //   path.absolute.path,
+                        //   path.path,
+                        //   quality: 88,
+                        //   rotate: 180,
+                        // );
+
+                        // print(file.lengthSync());
+                        print('result $path');
+
+                        // return result;
+
                         await storageRef.ref('images/${e.name}').putFile(path);
                         return e.name.toString();
                       }).toList();
@@ -485,7 +498,7 @@ class _CreateCampPageState extends State<CreateCampPage> {
                       final arrImg = controllerImg.images.map((e) {
                         return e.name.toString();
                       }).toList();
-                      print(arraryDateRange);
+                      print(arrImg);
 
                       AutoRouter.of(context).push(CreateAddressRoute(
                         adminId:
@@ -500,9 +513,9 @@ class _CreateCampPageState extends State<CreateCampPage> {
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
+                      children: const [
                         SizedBox(),
-                        const Text('Занятые даты'),
+                        Text('Занятые даты'),
                         Icon(Icons.arrow_forward)
                       ],
                     ),
@@ -523,28 +536,11 @@ class _CreateCampPageState extends State<CreateCampPage> {
   }
 }
 
-class _phoneInput extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      onChanged: (value) {},
-      style: const TextStyle(),
-      decoration: const InputDecoration(
-        // contentPadding: EdgeInsets.all(5),
-        border: OutlineInputBorder(),
-        // labelText: 'phone number',
-        helperText: '',
-        // errorText: state.email.invalid ? 'invalid email' : null,
-      ),
-    );
-  }
-}
-
 Widget _RadioIcon(String icon, String nameIcon) {
   return Row(
     children: [
       Container(
-        margin: EdgeInsets.only(right: 15),
+        margin: const EdgeInsets.only(right: 15),
         child: Image.asset(
           icon,
           height: 40,

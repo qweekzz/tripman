@@ -5,13 +5,13 @@ part 'date_event.dart';
 part 'date_state.dart';
 
 class DateBloc extends Bloc<DateEvent, DateState> {
-  DateBloc() : super(DateInitial()) {
+  DateBloc() : super(const DateInitial()) {
     on<DateEvent>(_onDateInit);
     on<DateChangedButton>(_onDateChangedButton);
   }
 
   _onDateInit(DateEvent event, Emitter<DateState> emit) {
-    emit(DateInitial());
+    emit(const DateInitial());
   }
 
   // _onDateChanged2(DateChanged event, Emitter<DateInitial> emit) {

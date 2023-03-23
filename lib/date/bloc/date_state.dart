@@ -14,7 +14,7 @@ class DateInitial extends DateState {
 class DateInfo extends DateState {
   final String date;
 
-  DateInfo({
+  const DateInfo({
     required this.date,
   });
 

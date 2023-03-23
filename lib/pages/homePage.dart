@@ -1,18 +1,17 @@
-import 'dart:math';
+// ignore_for_file: avoid_print
 
-import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+
 import 'package:tripman/authentication/bloc/authentication_bloc.dart';
 import 'package:tripman/date/bloc/date_bloc.dart';
 import 'package:tripman/dateBase/bloc/date_base_bloc.dart';
 import 'package:tripman/routers/router.gr.dart';
-import 'package:tripman/test/bloc/test_bloc.dart';
 
 class homePage extends StatefulWidget {
   const homePage({super.key});
@@ -54,6 +53,7 @@ class _homePageState extends State<homePage> {
     }
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: BlocBuilder<DateBloc, DateState>(
         builder: (context, state) {
           TextEditingController _controllerDate =
@@ -68,7 +68,7 @@ class _homePageState extends State<homePage> {
             _TabIcon('lib/assets/icons/camp.png', 'Кэмпинги'),
             _TabIcon('lib/assets/icons/glamp.png', 'Глэмпинги'),
             _TabIcon('lib/assets/icons/barrel2.png', 'Бочка'),
-            _TabIcon('lib/assets/icons/basa.png', 'Базы отдыха'),
+            _TabIcon('lib/assets/icons/basa.png', 'База отдыха'),
             _TabIcon('lib/assets/icons/shale.png', 'Шале'),
           ];
           return DefaultTabController(
@@ -166,7 +166,7 @@ class _homePageState extends State<homePage> {
                                             child: IconButton(
                                               onPressed: () {
                                                 AutoRouter.of(context)
-                                                    .replaceNamed('/home');
+                                                    .pushNamed('/home');
                                               },
                                               icon: const Icon(
                                                 Icons.close,
@@ -334,7 +334,7 @@ class _homePageState extends State<homePage> {
                             _tabContent(context, state, 'Кэмпинги'),
                             _tabContent(context, state, 'Глэмпинги'),
                             _tabContent(context, state, 'Бочка'),
-                            _tabContent(context, state, 'База Отдыха'),
+                            _tabContent(context, state, 'База отдыха'),
                             _tabContent(context, state, 'Шале'),
                           ],
                         ),
@@ -447,12 +447,14 @@ Widget _tabContent(context, state, String type) {
                     ),
                     itemCount: state.listOfCamps[index].img.length,
                     itemBuilder: (context, indexScroll, realIndex) {
-                      Img() async {
+                      Future<String> Img() async {
+                        String downloadURL2;
                         final storage = FirebaseStorage.instance;
                         String downloadURL = await storage
                             .ref(
                                 'images/${state.listOfCamps[index].img[realIndex]}')
                             .getDownloadURL();
+
                         return downloadURL;
                       }
 
@@ -460,18 +462,56 @@ Widget _tabContent(context, state, String type) {
                       return FutureBuilder<Object>(
                           future: Img(),
                           builder: (context, snapshot) {
+                            print('snaphot ${snapshot.data}');
                             return SizedBox(
                               width: MediaQuery.of(context).size.width * 1,
                               height: 335,
-                              child: snapshot.data != null
-                                  ? Image.network(
-                                      '${snapshot.data}',
-                                      fit: BoxFit.cover,
+                              child: snapshot.connectionState ==
+                                      ConnectionState.done
+                                  ? Stack(
+                                      alignment: Alignment.bottomCenter,
+                                      // fit: StackFit.expand,
+                                      children: [
+                                        CachedNetworkImage(
+                                          width: size.width,
+                                          height: 320,
+                                          key: UniqueKey(),
+                                          imageUrl:
+                                              'https://ik.imagekit.io/qweek/o/${snapshot.data.toString().split('/o/')[1]}',
+                                          placeholder: (context, url) =>
+                                              CachedNetworkImage(
+                                            fit: BoxFit.cover,
+                                            imageUrl:
+                                                'https://ik.imagekit.io/qweek/o/${snapshot.data.toString().split('/o/')[1]}&tr=bl-50',
+                                          ),
+                                          errorWidget: (context, url, error) =>
+                                              const Icon(Icons.error),
+                                          fit: BoxFit.cover,
+                                        ),
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            color: Colors.black87,
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                          ),
+                                          margin:
+                                              const EdgeInsets.only(bottom: 15),
+                                          width: 45,
+                                          height: 20,
+                                          child: Center(
+                                            child: Text(
+                                              '${realIndex + 1} / ${state.listOfCamps[index].img.length}',
+                                              textAlign: TextAlign.center,
+                                              style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w400),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     )
-                                  : Image.network(
-                                      'https://firebasestorage.googleapis.com/v0/b/tripman-413f6.appspot.com/o/images%2FnotFound.png?alt=media&token=72bc3878-5faf-4bb7-8543-ab1e85ebd140',
-                                      fit: BoxFit.cover,
-                                    ),
+                                  : null,
                             );
                           });
                     },
@@ -511,7 +551,7 @@ Widget _tabContent(context, state, String type) {
                               ),
                               Text(
                                 '${state.listOfCamps[index].closeDate[0].toDate().day} ${monthToWord(state.listOfCamps[index].closeDate[0].toDate().month) ?? '0'} - ${state.listOfCamps[index].closeDate[1].toDate().day} ${monthToWord(state.listOfCamps[index].closeDate[1].toDate().month) ?? '0'}',
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontWeight: FontWeight.w400,
                                     fontSize: 15,
                                     color: Colors.black54),
@@ -526,7 +566,7 @@ Widget _tabContent(context, state, String type) {
                             children: [
                               Text(
                                   'До ${state.listOfCamps[index].human} гостей',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontWeight: FontWeight.w400,
                                       fontSize: 15,
                                       color: Colors.black54)),
@@ -541,7 +581,7 @@ Widget _tabContent(context, state, String type) {
             ),
           );
         } else {
-          return SizedBox(
+          return const SizedBox(
             height: 0,
           );
         }

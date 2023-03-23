@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:auto_route/auto_route.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -5,10 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:tripman/authentication/bloc/authentication_bloc.dart';
-import 'package:tripman/date/bloc/date_bloc.dart';
+
 import 'package:tripman/dateBase/bloc/date_base_bloc.dart';
 import 'package:tripman/forms/bloc/forms_bloc.dart';
-import 'package:tripman/models/camps_model.dart';
 
 class SingleItemPage extends StatelessWidget {
   final TextEditingController controllerPhone =
@@ -108,7 +109,7 @@ class SingleItemPage extends StatelessWidget {
                               backgroundColor: Colors.black,
                             ),
                             onPressed: () {
-                              context.read<DateBaseBloc>().add(DateGet());
+                              context.read<DateBaseBloc>().add(const DateGet());
                               AutoRouter.of(context).pushNamed('/home');
                             },
                             child: const Text('Отлично'),
@@ -121,7 +122,7 @@ class SingleItemPage extends StatelessWidget {
               );
             },
           );
-          context.read<DateBaseBloc>().add(DateGet());
+          context.read<DateBaseBloc>().add(const DateGet());
         },
         child: BlocBuilder<DateBaseBloc, DateBaseState>(
           builder: (context, state) {
@@ -197,7 +198,7 @@ class SingleItemPage extends StatelessWidget {
                           children: [
                             Text(
                               state.listOfCamps[itemId].name.toString(),
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -207,7 +208,7 @@ class SingleItemPage extends StatelessWidget {
                             ),
                             Text(
                               state.listOfCamps[itemId].address.toString(),
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400,
                                 color: Colors.black54,
@@ -218,7 +219,7 @@ class SingleItemPage extends StatelessWidget {
                             ),
                             Text(
                               state.listOfCamps[itemId].desc.toString(),
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w400,
                                 color: Colors.black,
@@ -276,18 +277,18 @@ class SingleItemPage extends StatelessWidget {
                                       children: [
                                         Text(
                                           'До ${state.listOfCamps[itemId].human} гостей',
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.w400,
                                             color: Colors.black54,
                                           ),
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 5,
                                         ),
                                         Text(
                                           'от ${state.listOfCamps[itemId].price.toString()} ₽',
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.w500,
                                             color: Colors.black,
@@ -314,6 +315,7 @@ class SingleItemPage extends StatelessWidget {
                                           backgroundColor: Colors.black,
                                         ),
                                         onPressed: () async {
+                                          print(state.listOfCamps[itemId].uId);
                                           await _SelectDateRange();
                                           context
                                               .read<DateBaseBloc>()
@@ -326,14 +328,8 @@ class SingleItemPage extends StatelessWidget {
                                                 userPhone: controllerPhone.text,
                                                 comment: controllerComment.text,
                                                 status: 'Ожидание',
+                                                uid: state.listOfCamps[itemId],
                                               ));
-
-                                          // print(context
-                                          //     .read<AuthenticationBloc>()
-                                          //     .state
-                                          //     .props
-                                          //     .first);
-                                          // print(_selectedDateRange);
                                         },
                                         child: const Text('Забронировать'),
                                       ),
@@ -350,7 +346,7 @@ class SingleItemPage extends StatelessWidget {
                 ],
               );
             } else {
-              return Text('данных нет');
+              return const Text('данных нет');
             }
           },
         ),

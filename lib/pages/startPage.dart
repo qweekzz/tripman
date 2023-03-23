@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -64,7 +66,7 @@ class StartPage extends StatelessWidget {
             height: height1 / 3,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
+              children: const [
                 _SubmitButton1(),
                 _SubmitButton2(),
                 RichTextLicense(),
@@ -148,7 +150,6 @@ class RichTextLicense extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.only(top: 25),
       child: RichText(

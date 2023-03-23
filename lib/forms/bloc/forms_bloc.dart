@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -94,7 +92,6 @@ class FormsBloc extends Bloc<FormsEvent, FormsValidate> {
     FormSubmitted event,
     Emitter<FormsValidate> emit,
   ) async {
-    print('state Users $state');
     Users user = Users(
       email: state.email,
       password: state.password,
@@ -103,12 +100,10 @@ class FormsBloc extends Bloc<FormsEvent, FormsValidate> {
     );
     if (event.value == Status.signIn) {
       await _updateUIAndSignIn(event, emit, user);
-      print('вошел?');
       // emit(state.copyWith(isLoading: false));
       // await AuthenticationRepository().signIn(user);
     } else if (event.value == Status.signUp) {
       await _updateUIAndSignUp(event, emit, user);
-      print('zareg?');
     } else if (event.value == Status.phoneIn) {
       await _updateUIAndSignInPhone(event, emit, user);
     } else if (event.value == Status.phoneIn2) {
@@ -122,7 +117,6 @@ class FormsBloc extends Bloc<FormsEvent, FormsValidate> {
 
   _updateUIAndSignUp(
       FormSubmitted event, Emitter<FormsValidate> emit, Users user) async {
-    print('_updateUIAndSignUp');
     emit(
       state.copyWith(
           isEmailValid: _isEmailValid(state.email),
@@ -130,17 +124,13 @@ class FormsBloc extends Bloc<FormsEvent, FormsValidate> {
           isLoading: true),
     );
     if (state.isEmailValid && state.isPasswordValid) {
-      print('vrode rab');
       try {
         UserCredential? authUser = await _authenticationRepository.signUp(user);
         Users updatedUser = user.copyWith(uid: authUser!.user!.uid);
         // await _databaseRepository.saveUserData(updatedUser);
-        print('${updatedUser.uid} updatedUser');
         if (updatedUser != null) {
-          print('1');
           emit(state.copyWith(isLoading: false));
         } else {
-          print('2');
           emit(state.copyWith(isEmailValid: false, isLoading: false));
         }
       } on FirebaseAuthException catch (e) {
@@ -153,7 +143,6 @@ class FormsBloc extends Bloc<FormsEvent, FormsValidate> {
 
   _updateUIAndSignIn(
       FormSubmitted event, Emitter<FormsValidate> emit, Users user) async {
-    print('_updateUIAndSignUp');
     emit(
       state.copyWith(
           isEmailValid: _isEmailValid(state.email),
@@ -161,90 +150,68 @@ class FormsBloc extends Bloc<FormsEvent, FormsValidate> {
           isLoading: true),
     );
     if (state.isEmailValid && state.isPasswordValid) {
-      print('vrode rab');
       try {
         UserCredential? authUser = await _authenticationRepository.signIn(user);
         Users updatedUser = user.copyWith(uid: authUser!.user!.uid);
         // await _databaseRepository.saveUserData(updatedUser);
-        print('${updatedUser.uid} updatedUser');
         if (updatedUser != null) {
-          print('1');
           emit(state.copyWith(isLoading: false));
         } else {
-          print('2');
           emit(state.copyWith(isEmailValid: false, isLoading: false));
         }
       } on FirebaseAuthException catch (e) {
-        print('3');
         emit(state.copyWith(isLoading: false, isEmailValid: false));
       }
     } else {
-      print('4');
       emit(state.copyWith(isLoading: false, isEmailValid: false));
     }
   }
 
   _updateUIAndSignInPhone(
       FormSubmitted event, Emitter<FormsValidate> emit, Users user) async {
-    print('_updateUIAndSignInPhone');
     emit(
       state.copyWith(isPhoneValid: true, isLoading: true),
     );
     if (state.isPhoneValid) {
-      print('vrode rab Phome');
       try {
         UserCredential? authUser =
             await _authenticationRepository.verifyPhoneNumber(user);
         Users updatedUser = user.copyWith(uid: authUser!.user!.uid);
-        print('tru $user');
         // await _databaseRepository.saveUserData(updatedUser);
-        print('${updatedUser.uid} updatedUser');
         if (updatedUser != null) {
-          print('1');
           emit(state.copyWith(isLoading: false));
         } else {
-          print('2');
           emit(state.copyWith(isEmailValid: false, isLoading: false));
         }
       } on FirebaseAuthException catch (e) {
-        print('3');
         emit(state.copyWith(isLoading: false, isEmailValid: false));
       }
     } else {
-      print('4');
       emit(state.copyWith(isLoading: false, isEmailValid: false));
     }
   }
 
   _confirmSMS(
       FormSubmitted event, Emitter<FormsValidate> emit, Users user) async {
-    print('_updateUIAndSignInPhone');
     // emit(
     //   state.copyWith(isPhoneValid: true, isLoading: true, smsCode: '123456'),
     // );
 
     if (state.isPhoneValid) {
-      print('vrode rab Phome2 $state');
       try {
         UserCredential? authUser = await _authenticationRepository
             .verifyPhoneNumber2(user, state.smsCode);
-        print('checkauthUser $authUser');
         Users updatedUser = user.copyWith(uid: authUser!.user!.uid);
         // await _databaseRepository.saveUserData(updatedUser);
-        print('${updatedUser.uid} updatedUser');
         if (updatedUser != null) {
-          print('1');
           emit(state.copyWith(isLoading: false));
         } else {
-          print('2');
           emit(state.copyWith(isEmailValid: false, isLoading: false));
         }
       } on FirebaseAuthException catch (e) {
-        print('3 $e');
         emit(state.copyWith(isLoading: false));
       }
     } else {
-      print('4');
       emit(state.copyWith(isLoading: false, isEmailValid: false));
     }
   }

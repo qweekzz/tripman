@@ -21,12 +21,14 @@ class DateBaseBloc extends Bloc<DateBaseEvent, DateBaseState> {
   }
 
   _saveOrderData(DateSave event, Emitter emit) async {
+    List<Camps> listOfCamps = await _databaseRepository.getCampData();
     await _databaseRepository.addCampData(
       event.clientId,
       event.AdminId,
       event.userPhone,
       event.comment,
       event.status,
+      event.uid,
     );
     emit(DateBaseSave(
       event.clientId,
@@ -34,6 +36,7 @@ class DateBaseBloc extends Bloc<DateBaseEvent, DateBaseState> {
       event.userPhone,
       event.comment,
       event.status,
+      listOfCamps,
     ));
   }
 

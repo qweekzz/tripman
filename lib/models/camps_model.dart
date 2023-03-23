@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Camps {
+  final String? uId;
   final String? adminId;
   final String? adminPhone;
   final String? userPhone;
@@ -17,6 +18,7 @@ class Camps {
   final Map? order;
 
   Camps({
+    this.uId,
     this.adminId,
     this.adminPhone,
     this.userPhone,
@@ -34,6 +36,7 @@ class Camps {
   });
 
   Camps copyWith({
+    String? uId,
     String? adminId,
     String? adminPhone,
     String? userPhone,
@@ -50,6 +53,7 @@ class Camps {
     Map? order,
   }) {
     return Camps(
+      uId: uId ?? this.uId,
       adminId: adminId ?? this.adminId,
       adminPhone: adminPhone ?? this.adminPhone,
       userPhone: userPhone ?? this.userPhone,
@@ -90,7 +94,8 @@ class Camps {
 
   Camps.fromDocumentSnapshot(
     DocumentSnapshot<Map<dynamic, dynamic>> doc,
-  )   : adminId = doc.data()!["adminId"],
+  )   : uId = doc.id,
+        adminId = doc.data()!["adminId"],
         adminPhone = doc.data()!["adminPhone"],
         userPhone = doc.data()!["userPhone"],
         name = doc.data()!["name"],

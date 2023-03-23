@@ -5,6 +5,8 @@ abstract class DateBaseState extends Equatable {
 
   @override
   List<Object> get props => [];
+
+  get listOfCamps => null;
 }
 
 class DateBaseInitial extends DateBaseState {}
@@ -23,16 +25,19 @@ class DateBaseSave extends DateBaseState {
   final String userPhone;
   final String comment;
   final String status;
+  final List<Camps> listOfCamps;
   const DateBaseSave(
     this.clientId,
     this.AdminId,
     this.userPhone,
     this.comment,
     this.status,
+    this.listOfCamps,
   );
 
   @override
-  List<Object> get props => [clientId, AdminId, userPhone, comment, status];
+  List<Object> get props =>
+      [clientId, AdminId, userPhone, comment, status, listOfCamps];
 }
 
 class DateBaseAdminSaveState extends DateBaseState {

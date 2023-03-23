@@ -5,10 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tripman/authentication/bloc/authentication_bloc.dart';
 import 'package:tripman/forms/bloc/forms_bloc.dart';
-import 'package:tripman/pages/homePage.dart';
-import 'package:tripman/pages/registPage.dart';
-
-import '../forms/bloc/forms_bloc.dart';
 
 OutlineInputBorder border = const OutlineInputBorder(
     borderSide: BorderSide(color: Colors.black, width: 3.0));
@@ -28,9 +24,6 @@ class LoginPage extends StatelessWidget {
               context.read<FormsBloc>().add(const FormSucceeded());
               // print(state.isEmailValid);
               // print(state.isPasswordValid);
-              print(state.isPhoneValid);
-              print(state);
-              print(context.read<AuthenticationBloc>().state);
             }
             // else if (!state.isEmailValid || !state.isPasswordValid) {
             //   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -42,7 +35,6 @@ class LoginPage extends StatelessWidget {
         BlocListener<AuthenticationBloc, AuthenticationState>(
           listener: (context, state) {
             if (state is AuthenticationSuccess) {
-              print('BlocListener login');
               AutoRouter.of(context).replaceNamed('/home');
             }
           },
@@ -129,7 +121,6 @@ class _PasswordField extends StatelessWidget {
                   : null,
             ),
             onChanged: (value) {
-              print('ecnm');
               context.read<FormsBloc>().add(PasswordChanged(value));
             },
           ),
@@ -154,20 +145,18 @@ class _SubmitButton extends StatelessWidget {
                 ? () {
                     context
                         .read<FormsBloc>()
-                        .add(FormSubmitted(value: Status.signIn));
+                        .add(const FormSubmitted(value: Status.signIn));
                     // context
                     //     .read<AuthenticationBloc>()
                     //     .add(AuthenticationStarted());
                     // print(context.read<AuthenticationBloc>().state);
 
-                    print('login');
                     if (state is AuthenticationSuccess) {
                       AutoRouter.of(context).replaceNamed('/home');
-                      print(context.read<AuthenticationBloc>().state);
                     }
                   }
                 : null,
-            child: Text('Войти'),
+            child: const Text('Войти'),
           ),
         );
       },

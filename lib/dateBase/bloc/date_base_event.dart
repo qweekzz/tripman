@@ -20,12 +20,14 @@ class DateSave extends DateBaseEvent {
 
   final String comment;
   final String status;
+  final Camps uid;
   const DateSave({
     required this.clientId,
     required this.AdminId,
     required this.userPhone,
     required this.comment,
     required this.status,
+    required this.uid,
   });
 
   @override
