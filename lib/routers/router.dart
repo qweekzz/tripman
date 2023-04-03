@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 
 import 'package:tripman/pages/BlocNavigate.dart';
+import 'package:tripman/pages/BookingPage.dart';
 import 'package:tripman/pages/adminPage/createAddressPage.dart';
 import 'package:tripman/pages/adminPage/createCampPage.dart';
 import 'package:tripman/pages/adminPage/createPricePage.dart';
@@ -24,6 +25,7 @@ import 'package:tripman/pages/singleItemPage.dart';
     AutoRoute(page: optPage, path: '/opt'),
     AutoRoute(page: LicensePage, path: '/license'),
     AutoRoute(page: SingleItemPage, path: '/item/:id'),
+    AutoRoute(page: BookingPage, path: '/item/:id/booking'),
     AutoRoute(page: CreateCampPage, path: '/createCamp'),
     AutoRoute(page: CreateAddressPage, path: '/createAddress'),
     AutoRoute(page: CreatePricePage, path: '/createPrice'),

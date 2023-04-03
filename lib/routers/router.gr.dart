@@ -11,14 +11,15 @@
 // ignore_for_file: type=lint
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i13;
-import 'package:flutter/material.dart' as _i14;
+import 'package:auto_route/auto_route.dart' as _i14;
+import 'package:flutter/material.dart' as _i15;
 
-import '../pages/adminPage/createAddressPage.dart' as _i10;
-import '../pages/adminPage/createCampPage.dart' as _i9;
-import '../pages/adminPage/createPricePage.dart' as _i11;
-import '../pages/adminPage/objectOrderPage.dart' as _i12;
+import '../pages/adminPage/createAddressPage.dart' as _i11;
+import '../pages/adminPage/createCampPage.dart' as _i10;
+import '../pages/adminPage/createPricePage.dart' as _i12;
+import '../pages/adminPage/objectOrderPage.dart' as _i13;
 import '../pages/BlocNavigate.dart' as _i1;
+import '../pages/BookingPage.dart' as _i9;
 import '../pages/homePage.dart' as _i2;
 import '../pages/licensePage.dart' as _i7;
 import '../pages/loginPage.dart' as _i3;
@@ -27,32 +28,32 @@ import '../pages/phoneLoginPage.dart' as _i5;
 import '../pages/registPage.dart' as _i4;
 import '../pages/singleItemPage.dart' as _i8;
 
-class AppRouter extends _i13.RootStackRouter {
-  AppRouter([_i14.GlobalKey<_i14.NavigatorState>? navigatorKey])
+class AppRouter extends _i14.RootStackRouter {
+  AppRouter([_i15.GlobalKey<_i15.NavigatorState>? navigatorKey])
       : super(navigatorKey);
 
   @override
-  final Map<String, _i13.PageFactory> pagesMap = {
+  final Map<String, _i14.PageFactory> pagesMap = {
     BlocNavigate.name: (routeData) {
-      return _i13.MaterialPageX<dynamic>(
+      return _i14.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i1.BlocNavigate(),
       );
     },
     HomeRoute.name: (routeData) {
-      return _i13.MaterialPageX<dynamic>(
+      return _i14.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i2.homePage(),
       );
     },
     LoginRoute.name: (routeData) {
-      return _i13.MaterialPageX<dynamic>(
+      return _i14.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i3.LoginPage(),
       );
     },
     RegistrRoute.name: (routeData) {
-      return _i13.MaterialPageX<dynamic>(
+      return _i14.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i4.RegistrPage(),
       );
@@ -60,7 +61,7 @@ class AppRouter extends _i13.RootStackRouter {
     PhoneLoginRoute.name: (routeData) {
       final args = routeData.argsAs<PhoneLoginRouteArgs>(
           orElse: () => const PhoneLoginRouteArgs());
-      return _i13.MaterialPageX<dynamic>(
+      return _i14.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i5.PhoneLoginPage(
           key: args.key,
@@ -70,7 +71,7 @@ class AppRouter extends _i13.RootStackRouter {
     },
     OptRoute.name: (routeData) {
       final args = routeData.argsAs<OptRouteArgs>();
-      return _i13.MaterialPageX<dynamic>(
+      return _i14.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i6.optPage(
           key: args.key,
@@ -79,7 +80,7 @@ class AppRouter extends _i13.RootStackRouter {
       );
     },
     LicenseRoute.name: (routeData) {
-      return _i13.MaterialPageX<dynamic>(
+      return _i14.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i7.LicensePage(),
       );
@@ -88,7 +89,7 @@ class AppRouter extends _i13.RootStackRouter {
       final pathParams = routeData.inheritedPathParams;
       final args = routeData.argsAs<SingleItemRouteArgs>(
           orElse: () => SingleItemRouteArgs(itemId: pathParams.getInt('id')));
-      return _i13.MaterialPageX<dynamic>(
+      return _i14.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i8.SingleItemPage(
           key: args.key,
@@ -98,17 +99,31 @@ class AppRouter extends _i13.RootStackRouter {
         ),
       );
     },
-    CreateCampRoute.name: (routeData) {
-      return _i13.MaterialPageX<dynamic>(
+    BookingRoute.name: (routeData) {
+      final pathParams = routeData.inheritedPathParams;
+      final args = routeData.argsAs<BookingRouteArgs>(
+          orElse: () => BookingRouteArgs(itemId: pathParams.getInt('id')));
+      return _i14.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i9.CreateCampPage(),
+        child: _i9.BookingPage(
+          key: args.key,
+          itemId: args.itemId,
+          controllerPhone: args.controllerPhone,
+          controllerComment: args.controllerComment,
+        ),
+      );
+    },
+    CreateCampRoute.name: (routeData) {
+      return _i14.MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const _i10.CreateCampPage(),
       );
     },
     CreateAddressRoute.name: (routeData) {
       final args = routeData.argsAs<CreateAddressRouteArgs>();
-      return _i13.MaterialPageX<dynamic>(
+      return _i14.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i10.CreateAddressPage(
+        child: _i11.CreateAddressPage(
           key: args.key,
           adminId: args.adminId,
           name: args.name,
@@ -122,9 +137,9 @@ class AppRouter extends _i13.RootStackRouter {
     },
     CreatePriceRoute.name: (routeData) {
       final args = routeData.argsAs<CreatePriceRouteArgs>();
-      return _i13.MaterialPageX<dynamic>(
+      return _i14.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i11.CreatePricePage(
+        child: _i12.CreatePricePage(
           key: args.key,
           adminId: args.adminId,
           name: args.name,
@@ -138,60 +153,64 @@ class AppRouter extends _i13.RootStackRouter {
       );
     },
     ObjectOrderRoute.name: (routeData) {
-      return _i13.MaterialPageX<dynamic>(
+      return _i14.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i12.ObjectOrderPage(),
+        child: const _i13.ObjectOrderPage(),
       );
     },
   };
 
   @override
-  List<_i13.RouteConfig> get routes => [
-        _i13.RouteConfig(
+  List<_i14.RouteConfig> get routes => [
+        _i14.RouteConfig(
           BlocNavigate.name,
           path: '/',
         ),
-        _i13.RouteConfig(
+        _i14.RouteConfig(
           HomeRoute.name,
           path: '/home',
         ),
-        _i13.RouteConfig(
+        _i14.RouteConfig(
           LoginRoute.name,
           path: '/login',
         ),
-        _i13.RouteConfig(
+        _i14.RouteConfig(
           RegistrRoute.name,
           path: '/reg',
         ),
-        _i13.RouteConfig(
+        _i14.RouteConfig(
           PhoneLoginRoute.name,
           path: '/phoneLogin',
         ),
-        _i13.RouteConfig(
+        _i14.RouteConfig(
           OptRoute.name,
           path: '/opt',
         ),
-        _i13.RouteConfig(
+        _i14.RouteConfig(
           LicenseRoute.name,
           path: '/license',
         ),
-        _i13.RouteConfig(
+        _i14.RouteConfig(
           SingleItemRoute.name,
           path: '/item/:id',
         ),
-        _i13.RouteConfig(
+        _i14.RouteConfig(
+          BookingRoute.name,
+          path: '/item/:id/booking',
+        ),
+        _i14.RouteConfig(
           CreateCampRoute.name,
           path: '/createCamp',
         ),
-        _i13.RouteConfig(
+        _i14.RouteConfig(
           CreateAddressRoute.name,
           path: '/createAddress',
         ),
-        _i13.RouteConfig(
+        _i14.RouteConfig(
           CreatePriceRoute.name,
           path: '/createPrice',
         ),
-        _i13.RouteConfig(
+        _i14.RouteConfig(
           ObjectOrderRoute.name,
           path: '/objectOrder',
         ),
@@ -200,7 +219,7 @@ class AppRouter extends _i13.RootStackRouter {
 
 /// generated route for
 /// [_i1.BlocNavigate]
-class BlocNavigate extends _i13.PageRouteInfo<void> {
+class BlocNavigate extends _i14.PageRouteInfo<void> {
   const BlocNavigate()
       : super(
           BlocNavigate.name,
@@ -212,7 +231,7 @@ class BlocNavigate extends _i13.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i2.homePage]
-class HomeRoute extends _i13.PageRouteInfo<void> {
+class HomeRoute extends _i14.PageRouteInfo<void> {
   const HomeRoute()
       : super(
           HomeRoute.name,
@@ -224,7 +243,7 @@ class HomeRoute extends _i13.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i3.LoginPage]
-class LoginRoute extends _i13.PageRouteInfo<void> {
+class LoginRoute extends _i14.PageRouteInfo<void> {
   const LoginRoute()
       : super(
           LoginRoute.name,
@@ -236,7 +255,7 @@ class LoginRoute extends _i13.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i4.RegistrPage]
-class RegistrRoute extends _i13.PageRouteInfo<void> {
+class RegistrRoute extends _i14.PageRouteInfo<void> {
   const RegistrRoute()
       : super(
           RegistrRoute.name,
@@ -248,9 +267,9 @@ class RegistrRoute extends _i13.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i5.PhoneLoginPage]
-class PhoneLoginRoute extends _i13.PageRouteInfo<PhoneLoginRouteArgs> {
+class PhoneLoginRoute extends _i14.PageRouteInfo<PhoneLoginRouteArgs> {
   PhoneLoginRoute({
-    _i14.Key? key,
+    _i15.Key? key,
     dynamic controllerNumb,
   }) : super(
           PhoneLoginRoute.name,
@@ -270,7 +289,7 @@ class PhoneLoginRouteArgs {
     this.controllerNumb,
   });
 
-  final _i14.Key? key;
+  final _i15.Key? key;
 
   final dynamic controllerNumb;
 
@@ -282,9 +301,9 @@ class PhoneLoginRouteArgs {
 
 /// generated route for
 /// [_i6.optPage]
-class OptRoute extends _i13.PageRouteInfo<OptRouteArgs> {
+class OptRoute extends _i14.PageRouteInfo<OptRouteArgs> {
   OptRoute({
-    _i14.Key? key,
+    _i15.Key? key,
     required String controllerNumb,
   }) : super(
           OptRoute.name,
@@ -304,7 +323,7 @@ class OptRouteArgs {
     required this.controllerNumb,
   });
 
-  final _i14.Key? key;
+  final _i15.Key? key;
 
   final String controllerNumb;
 
@@ -316,7 +335,7 @@ class OptRouteArgs {
 
 /// generated route for
 /// [_i7.LicensePage]
-class LicenseRoute extends _i13.PageRouteInfo<void> {
+class LicenseRoute extends _i14.PageRouteInfo<void> {
   const LicenseRoute()
       : super(
           LicenseRoute.name,
@@ -328,9 +347,9 @@ class LicenseRoute extends _i13.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i8.SingleItemPage]
-class SingleItemRoute extends _i13.PageRouteInfo<SingleItemRouteArgs> {
+class SingleItemRoute extends _i14.PageRouteInfo<SingleItemRouteArgs> {
   SingleItemRoute({
-    _i14.Key? key,
+    _i15.Key? key,
     required int itemId,
     dynamic controllerPhone,
     dynamic controllerComment,
@@ -357,7 +376,7 @@ class SingleItemRouteArgs {
     this.controllerComment,
   });
 
-  final _i14.Key? key;
+  final _i15.Key? key;
 
   final int itemId;
 
@@ -372,8 +391,53 @@ class SingleItemRouteArgs {
 }
 
 /// generated route for
-/// [_i9.CreateCampPage]
-class CreateCampRoute extends _i13.PageRouteInfo<void> {
+/// [_i9.BookingPage]
+class BookingRoute extends _i14.PageRouteInfo<BookingRouteArgs> {
+  BookingRoute({
+    _i15.Key? key,
+    required int itemId,
+    dynamic controllerPhone,
+    dynamic controllerComment,
+  }) : super(
+          BookingRoute.name,
+          path: '/item/:id/booking',
+          args: BookingRouteArgs(
+            key: key,
+            itemId: itemId,
+            controllerPhone: controllerPhone,
+            controllerComment: controllerComment,
+          ),
+          rawPathParams: {'id': itemId},
+        );
+
+  static const String name = 'BookingRoute';
+}
+
+class BookingRouteArgs {
+  const BookingRouteArgs({
+    this.key,
+    required this.itemId,
+    this.controllerPhone,
+    this.controllerComment,
+  });
+
+  final _i15.Key? key;
+
+  final int itemId;
+
+  final dynamic controllerPhone;
+
+  final dynamic controllerComment;
+
+  @override
+  String toString() {
+    return 'BookingRouteArgs{key: $key, itemId: $itemId, controllerPhone: $controllerPhone, controllerComment: $controllerComment}';
+  }
+}
+
+/// generated route for
+/// [_i10.CreateCampPage]
+class CreateCampRoute extends _i14.PageRouteInfo<void> {
   const CreateCampRoute()
       : super(
           CreateCampRoute.name,
@@ -384,10 +448,10 @@ class CreateCampRoute extends _i13.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i10.CreateAddressPage]
-class CreateAddressRoute extends _i13.PageRouteInfo<CreateAddressRouteArgs> {
+/// [_i11.CreateAddressPage]
+class CreateAddressRoute extends _i14.PageRouteInfo<CreateAddressRouteArgs> {
   CreateAddressRoute({
-    _i14.Key? key,
+    _i15.Key? key,
     required String adminId,
     required String name,
     required String type,
@@ -425,7 +489,7 @@ class CreateAddressRouteArgs {
     required this.closeDate,
   });
 
-  final _i14.Key? key;
+  final _i15.Key? key;
 
   final String adminId;
 
@@ -448,10 +512,10 @@ class CreateAddressRouteArgs {
 }
 
 /// generated route for
-/// [_i11.CreatePricePage]
-class CreatePriceRoute extends _i13.PageRouteInfo<CreatePriceRouteArgs> {
+/// [_i12.CreatePricePage]
+class CreatePriceRoute extends _i14.PageRouteInfo<CreatePriceRouteArgs> {
   CreatePriceRoute({
-    _i14.Key? key,
+    _i15.Key? key,
     required String adminId,
     required String name,
     required String type,
@@ -492,7 +556,7 @@ class CreatePriceRouteArgs {
     required this.address,
   });
 
-  final _i14.Key? key;
+  final _i15.Key? key;
 
   final String adminId;
 
@@ -517,8 +581,8 @@ class CreatePriceRouteArgs {
 }
 
 /// generated route for
-/// [_i12.ObjectOrderPage]
-class ObjectOrderRoute extends _i13.PageRouteInfo<void> {
+/// [_i13.ObjectOrderPage]
+class ObjectOrderRoute extends _i14.PageRouteInfo<void> {
   const ObjectOrderRoute()
       : super(
           ObjectOrderRoute.name,
